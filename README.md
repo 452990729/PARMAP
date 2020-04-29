@@ -105,7 +105,7 @@ optional arguments:
   -b B                  if use validator mode, bootstrap time <<1>>
 ```
 
-
+You can get more details from the run.sh script from test directory.
 Citation
 --------
 
