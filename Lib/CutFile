@@ -1,0 +1,69 @@
+#!/usr/bin/env python
+
+import os
+import sys
+import argparse
+from time import sleep
+from glob import glob
+
+def SplitJob(shell, num, outb, jobh=1, platform='local', mem='1'):
+    label = os.path.basename(shell).strip('.sh')
+    outpath = os.path.join(outb, label+'.split')
+    if not os.path.exists(outpath):
+        os.mkdir(outpath)
+    i = 0
+    m = 0
+    with open(shell, 'r') as f:
+        list_tmp = [a.strip() for a in f]
+    assert len(list_tmp)%jobh == 0
+    job_num = len(list_tmp)/jobh
+    if job_num%num == 0:
+        base = job_num/num
+    else:
+        base = job_num/num+1
+    for line in list_tmp:
+        fs = os.path.join(outpath, '.'.join([label, str(i), 'sh']))
+        out = open(fs, 'a')
+        m +=1
+        if m <= base*jobh:
+            out.write(line.strip()+'\n')
+        else:
+            out.close()
+            m = 1
+            i += 1
+            out = open(os.path.join(outpath, '.'.join([label, str(i), 'sh'])),\
+                       'w')
+            out.write(line+'\n')
+    out.close()
+    os.system('cd {}'.format(outb))
+    if platform == 'local':
+        for fl in glob(outpath+'/*.sh'):
+            os.system('sh {} 1> {} 2> {}&'.format(fl, fl+'.o', fl+'.e'))
+        while os.popen('ps ux  | grep {} | grep -v CutFile.py |grep -v grep'\
+                       .format(os.path.join(outpath, label))).read():
+            sleep(60)
+    elif platform == 'lsf':
+        for fl in glob(outpath+'/*.sh'):
+            os.popen('bsub -q normal -n 1 -M {} -e {} -o {} sh {}'.format(
+                    mem, fl+'.e', fl+'.o', fl))
+        while os.popen('bjobs -w | grep {}'.format(os.path.join(outpath, label))).read():
+            sleep(60)
+    print 'ALL JOBS DONE!'
+
+def main():
+    parser = argparse.ArgumentParser(description="Split Job Localy")
+    parser.add_argument('--core', help='the cores', default=1, type=int)
+    parser.add_argument('--m', help='the memery', default=1)
+    parser.add_argument('--job_lines', help='the number line of single job',\
+                        default=1, type=int)
+    parser.add_argument('--shell', help='the input shell', required=True)
+    parser.add_argument('--platform', help='local or lsf', default='local')
+    parser.add_argument('--outpath', help='the output path', required=True)
+    argv=vars(parser.parse_args())
+    SplitJob(argv['shell'], int(argv['core']), argv['outpath'],\
+            int(argv['job_lines']), argv['platform'])
+
+if __name__ == '__main__':
+    main()
+
+
