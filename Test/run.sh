@@ -13,7 +13,7 @@ $SCRIPT_DIR/../Bin/CorPanPipeline.py -c $pep -o $outpath
 mkdir 3.Align
 cd 3.Align
 $SCRIPT_DIR/../Bin/AlignCluster.py -c ../2.Stat/Sample_GeneCluster.list -f ../1.Cluster/all_gene.fa -o ./ -t 8 -r
-$SCRIPT_DIR/../Bin/DefineSubtype.py ./Cluster ../0.phen/All SubType.txt
+$SCRIPT_DIR/../Bin/DefineSubtype.py -m ./Cluster -c ../0.phen/All -o SubType.txt
 cd ..
 #===============================================================
 
