@@ -104,8 +104,8 @@ optional arguments:
   -f F                  if use validator mode, cross time <<5>>
   -b B                  if use validator mode, bootstrap time <<1>>
 ```
-
 You can get more details from the run.sh script from test directory.
+
 Citation
 --------
 
