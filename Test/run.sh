@@ -22,9 +22,10 @@ cd 4.Train
 $SCRIPT_DIR/../Bin/ExtractById.py -m ../3.Align/SubType.txt -i ../0.phen/Train -o Feature.txt
 
 $SCRIPT_DIR/../Bin/FilterSubtype.py -m Feature.txt -p ../0.phen/Train -o ./
+$SCRIPT_DIR/../Bin/FilterByPercent.py -m FeatureDiff.txt -c ../0.phen/Train -t 0.1 -o FeatureFilterByPercent.txt
 mkdir ML
 cd ML
-$SCRIPT_DIR/../Bin/MlAndPredict.py validator -x ../FeatureDiff.txt -y ../../0.phen/Train
+$SCRIPT_DIR/../Bin/MlAndPredict.py validator -x ../FeatureFilterByPercent.txt -y ../../0.phen/Train
 cd ../../
 #===============================================================
 
