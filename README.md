@@ -61,7 +61,7 @@ optional arguments:
   -c C        pan-genome cluster, obtained from pan genome analysis pipeline
   -o O        output path
 ```
-Step4:filter gene allele matrix and get the key feature.
+Step4:cluster sample and define S/R clusters, also filter feature by fisher testingfilter gene allele matrix and get the key feature.
 ```bash
 ./FilterSubtype.py -h
 usage: FilterSubtype.py [-h] -m M -p P [-c C] -o O
@@ -75,7 +75,21 @@ optional arguments:
   -c C        cutoff
   -o O        output path
 ```
-Step5:mathine learning process, which you can choose the best model and parameters based on cross-validation and then test the model performance.
+Step5 filter feature by AMRS and get the key feature.
+```bash
+./FilterByPercent.py -h
+usage: FilterByPercent.py [-h] -m M -c C [-t T] [-o O]
+
+filter feature by Percent
+
+optional arguments:
+  -h, --help  show this help message and exit
+  -m M        input matrix data
+  -c C        input class file
+  -t T        cutoff<<0.1>>
+  -o O        output file<<FeatureFilterByPercent.txt>>
+```
+Step6:mathine learning process, which you can choose the best model and parameters based on cross-validation and then test the model performance.
 ```bash
 ./MlAndPredict.py -h
 usage: MlAndPredict.py [-h] -x X -y Y [-testx TESTX] [-testy TESTY]
