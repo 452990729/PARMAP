@@ -6,7 +6,7 @@ A pan-genome based computational framework to predict antimicrobial resistance
 | Author | Xuefei Lee |
 | License | See included LICENSE |
 
-Bacterial resistance is extremely serious, and multi-drug resistant bacteria are emerging in endlessly. The development of efficient computational biology tools is very important for the prediction of bacterial resistance. PARMAP is a computing framework for predicting bacterial resistance. It predicts the resistance of bacteria to multiple antibiotics based on the coding sequence of the strain's gene protein.
+Bacterial resistance is extremely serious, and multi-drug resistant bacteria are emerging in endlessly. The development of efficient computational biology tools is very important for the prediction of bacterial resistance. PARMAP is a computing framework for predicting bacterial resistance. It predicts the resistance of bacteria to multiple antibiotics based on the coding sequence of the strain.
 
 Installation
 ------------
@@ -104,8 +104,8 @@ optional arguments:
   -f F                  if use validator mode, cross time <<5>>
   -b B                  if use validator mode, bootstrap time <<1>>
 ```
-
 You can get more details from the run.sh script from test directory.
+
 Citation
 --------
 
