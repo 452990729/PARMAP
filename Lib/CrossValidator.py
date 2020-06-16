@@ -15,7 +15,6 @@ from sklearn.metrics import average_precision_score
 from sklearn.metrics import precision_recall_curve
 from compare_auc import roc_variance
 
-
 def PlotROC(ax, lb, color, fpr, tpr, auc, ci):
     if len(ci)>0:
         ax.plot(fpr, tpr, 'k-', lw=2, label='{}AUC(%95 CI) = {}({})'.\
@@ -124,7 +123,7 @@ def BinaClass(feature, response, model, fold):
 
 def GetAUC(np_test, np_predict):
     alpha=0.95
-    auc_value, auc_cov = delong_roc_variance(np_test, np_predict)
+    auc_value, auc_cov = roc_variance(np_test, np_predict)
     auc_std = np.sqrt(auc_cov)
     lower_upper_q = np.abs(np.array([0, 1]) - (1 - alpha) / 2)
     ci = stats.norm.ppf(lower_upper_q, loc=auc_value, scale=auc_std)

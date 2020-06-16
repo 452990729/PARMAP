@@ -18,15 +18,15 @@ def HandleConfig(path_in):
         return path_in
 
 #### SOFT
-PYTHON = config.get('SOFTWARE', 'python')
-PERL = config.get('SOFTWARE', 'perl')
-CDHIT = config.get('SOFTWARE', 'cd-hit')
+PYTHON = HandleConfig(config.get('SOFTWARE', 'python'))
+PERL = HandleConfig(config.get('SOFTWARE', 'perl'))
+CDHIT = HandleConfig(config.get('SOFTWARE', 'cd-hit'))
 
 ### SCRIPT
-CorPan_get_all = config.get('SCRIPT', 'CorPan_get_all')
-CorPan_stat_list = config.get('SCRIPT', 'CorPan_stat_list')
-CorPan_gene = config.get('SCRIPT', 'CorPan_gene')
-CorPan_specific = config.get('SCRIPT', 'CorPan_specific')
+CorPan_get_all = HandleConfig(config.get('SCRIPT', 'CorPan_get_all'))
+CorPan_stat_list = HandleConfig(config.get('SCRIPT', 'CorPan_stat_list'))
+CorPan_gene = HandleConfig(config.get('SCRIPT', 'CorPan_gene'))
+CorPan_specific = HandleConfig(config.get('SCRIPT', 'CorPan_specific'))
 
 #### DATABASE
 

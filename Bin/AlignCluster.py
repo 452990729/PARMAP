@@ -11,11 +11,17 @@ BasePath = os.path.split(os.path.realpath(__file__))[0]
 config = ConfigParser.ConfigParser()
 config.read(BasePath+'/config.ini')
 
+def HandleConfig(path_in):
+    if path_in.startswith('..'):
+        return os.path.join(BasePath, path_in)
+    else:
+        return path_in
+
 #### SOFT
-MUSCLE = config.get('SOFTWARE', 'muscle')
+MUSCLE = HandleConfig(config.get('SOFTWARE', 'muscle'))
 
 ### SCRIPT
-CutFile = config.get('SCRIPT', 'CutFile')
+CutFile = HandleConfig(config.get('SCRIPT', 'CutFile'))
 
 
 def ReadFasta(file_in):
@@ -66,7 +72,7 @@ def main():
     dict_fa = ReadFasta(argv['f'])
     ExtractCluster(argv['c'], argv['o'], dict_fa)
     if argv['r']:
-        os.system('nohup {} --core {} --shell {} --outpath {}&'.\
+        os.system('{} --core {} --shell {} --outpath {}'.\
                  format(CutFile, int(argv['t']), os.path.join(argv['o'], 'Run.sh'),\
                        argv['o']))
 
