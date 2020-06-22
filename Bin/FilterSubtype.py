@@ -46,7 +46,7 @@ def PlotPhen(adata, outpath='figures', tp='phen'):
     os.system('mv figures/umapClassficationOn.pdf {}'.format(outpath))
     os.system('mv figures/umapClassficationPhen.svg {}'.format(outpath))
 
-def SelectPositiveCluster(adata, cutoff=0.7):
+def SelectPositiveCluster(adata, cutoff=0.52):
     obs = adata.obs
     dict_tmp = {}
     list_out = []

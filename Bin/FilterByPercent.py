@@ -20,8 +20,9 @@ def CallMix(value, pd_sus):
     return round(total/pd_sus.shape[0], 2)
 
 def MakeCut(pd_data, pd_cls, ctl):
-    list_r = [str(i) for i in pd_cls.loc[pd_cls['Value']==1, :].index]
-    list_s = [str(i) for i in pd_cls.loc[pd_cls['Value']==0, :].index]
+    list_r = [str(i) for i in pd_cls.loc[pd_cls['Type']=='R', :].index]
+    list_s = [str(i) for i in pd_cls.loc[pd_cls['Type']=='S', :].index]
+    pd_data = pd_data.T
     pd_r = pd_data.loc[list_r, :]
     pd_s = pd_data.loc[list_s, :]
     list_tmp = []
@@ -31,6 +32,7 @@ def MakeCut(pd_data, pd_cls, ctl):
         if value >= 0.6:
             if CallMix(value, pd_sus) <= ctl:
                 list_tmp.append(column)
+                print column+'\t'+str(1-CallMix(value, pd_sus))
     pd_out = pd_data.loc[:, list_tmp]
     return pd_out
 
@@ -39,13 +41,13 @@ def main():
     parser.add_argument('-m', help='input matrix data', required=True)
     parser.add_argument('-c', help='input class file', required=True)
     parser.add_argument('-t', help='cutoff<<0.1>>', type=float, default=0.1)
-    parser.add_argument('-o', help='output file<<FinalFeature>>', default='FeatureFilterByPercent')
+    parser.add_argument('-o', help='output file<<FeatureFilterByPercent>>', default='FeatureFilterByPercent')
     argv=vars(parser.parse_args())
     pd_data = ReadData(argv['m'])
     pd_cls = ReadData(argv['c'])
     pd_out = MakeCut(pd_data, pd_cls, argv['t'])
-    pd_out.to_csv(argv['o']+'.txt', sep='\t', header=True, index=True)
-    genes = open(argv['o']+'.lst', 'w')
+    pd_out.T.to_csv(argv['o']+'.txt', sep='\t', header=True, index=True)
+    genes = open('FinalFeature.lst', 'w')
     for i in pd_out.columns:
         genes.write(i+'\n')
     genes.close()
