@@ -106,7 +106,7 @@ You can get more details from the run.sh script from test directory.
 
 Citation
 --------
-
+Li, X., Lin, J., Hu, Y., & Zhou, J. (2020). PARMAP: A Pan-Genome-Based Computational Framework for Predicting Antimicrobial Resistance. Frontiers in microbiology, 11.
 
 License
 -------
